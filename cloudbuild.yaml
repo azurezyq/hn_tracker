@@ -1,0 +1,10 @@
+steps:
+- name: 'python'
+  entrypoint: 'pip'
+  args: ["install", "-r", "requirements.txt", "--user"]
+- name: 'python'
+  entrypoint: 'bash'
+  args: ['-c', './tracker.py --gh_bin=gh/bin/gh >result.json']
+- name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+  entrypoint: 'bash'
+  args: ['-c', 'bq load --source_format=NEWLINE_DELIMITED_JSON --format=json hn_crawl.top_articles result.json schema.json']

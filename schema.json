@@ -1,0 +1,46 @@
+[
+  {
+    "name": "id",
+    "type": "STRING"
+  },
+  {
+    "name" : "rank",
+    "type" : "INTEGER",
+    "mode" : "NULLABLE"
+  },
+  {
+    "name" : "post_timestamp",
+    "type" : "TIMESTAMP",
+    "mode" : "NULLABLE"
+  },
+  {
+    "name" : "seen",
+    "type" : "TIMESTAMP",
+    "mode" : "NULLABLE"
+  },
+  {
+    "name" : "score",
+    "type" : "INTEGER",
+    "mode" : "NULLABLE"
+  },
+  {
+    "name" : "num_comments",
+    "type" : "INTEGER",
+    "mode" : "NULLABLE"
+  },
+  {
+    "name" : "link",
+    "type" : "STRING",
+    "mode" : "NULLABLE"
+  },
+  {
+    "name" : "hn_link",
+    "type" : "STRING",
+    "mode" : "NULLABLE"
+  },
+  {
+    "name" : "title",
+    "type" : "STRING",
+    "mode" : "NULLABLE"
+  }
+]
