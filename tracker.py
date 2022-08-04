@@ -4,6 +4,8 @@ from urllib.request import urlopen
 from datetime import datetime
 import json
 
+PARSER_VERSION = 2
+
 def ParsePage(url):
   d = etree.parse(urlopen(url), etree.HTMLParser())
   posts = d.xpath('//tr[@class="athing"]')
@@ -15,9 +17,9 @@ def ParsePage(url):
       score = int(score[0].text.split()[0])
     else:
       score = None
-    timestamp = d.xpath('.//span[@class="age"]/@title')
+    timestamp = subtext.xpath('.//span[@class="age"]/@title')
     if timestamp:
-      timestamp = timestamp[0]
+      timestamp = timestamp[0] + 'Z'
     else:
       timestamp = None
     comment_element = subtext.xpath('.//a[contains(text(),"comments")]')
@@ -32,14 +34,15 @@ def ParsePage(url):
     title = post.xpath('.//a[@class="titlelink"]')[0].text
     id_str = post.get('id')
     ret.append({
-      "rank" : rank,
-      "post_timestamp" : timestamp,
-      "score" : score,
-      "num_comments" : num_comments,
-      "link" : link,
-      "hn_link" : hn_link,
-      "title" : title,
-      "id" : id_str,
+      'rank' : rank,
+      'post_timestamp' : timestamp,
+      'score' : score,
+      'num_comments' : num_comments,
+      'link' : link,
+      'hn_link' : hn_link,
+      'title' : title,
+      'id' : id_str,
+      'parser_version' : PARSER_VERSION,
       })
   return ret
 
@@ -50,7 +53,8 @@ urls = [
     ]
 
 results = []
+seen = datetime.now().isoformat() + 'Z'
 for url in urls:
   for x in ParsePage(url):
-    x["seen"] = datetime.now().isoformat()
+    x["seen"] = seen
     print(json.dumps(x))
