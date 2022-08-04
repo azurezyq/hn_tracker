@@ -42,5 +42,10 @@
     "name" : "title",
     "type" : "STRING",
     "mode" : "NULLABLE"
+  },
+  {
+    "name" : "parser_version",
+    "type" : "STRING",
+    "mode" : "NULLABLE"
   }
 ]
