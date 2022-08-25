@@ -3,6 +3,8 @@ from lxml import etree
 from urllib.request import urlopen
 from datetime import datetime
 import json
+import argparse
+import time
 
 PARSER_VERSION = 2
 
@@ -46,15 +48,16 @@ def ParsePage(url):
       })
   return ret
 
-urls = [
-    "https://news.ycombinator.com/news",
-    "https://news.ycombinator.com/news?p=2",
-    "https://news.ycombinator.com/news?p=3"
-    ]
+if __name__ == '__main__':
+  parser = argparse.ArgumentParser(description='HN tracker')
+  parser.add_argument('--pages', type=int, nargs='?', default=3)
+  args = parser.parse_args()
 
-results = []
-seen = datetime.now().isoformat() + 'Z'
-for url in urls:
-  for x in ParsePage(url):
-    x["seen"] = seen
-    print(json.dumps(x))
+  results = []
+  seen = datetime.now().isoformat() + 'Z'
+  for n in range(1, args.pages + 1):
+    time.sleep(2)
+    url = f'https://news.ycombinator.com/news?p={n}'
+    for x in ParsePage(url):
+      x["seen"] = seen
+      print(json.dumps(x))
